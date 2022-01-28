@@ -71,11 +71,11 @@ function checkComplete(e) {
 }  
 function removeTodo(id, todo) {
   todos = todos.filter(todo => todo.id !== id)
-   const res = fetch('https://jsonplaceholder.typicode.com/todos/1', {
+   const res = fetch('https://jsonplaceholder.typicode.com/todos/'+id, {
       method: "delete"
     }).then(res => {
   
-    if(res.status !== 200) {
+    if(res.status !== 200 && ('#checked-btn') !== checkComplete) {
       const message = 'Error with Status Code: ' + res.status;
       throw new Error(message);
     }
