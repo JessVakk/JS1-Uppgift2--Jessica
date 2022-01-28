@@ -32,7 +32,6 @@ function updateItemStatus() {
   } else {
       itemText.style.textDecoration = "none";
   }
-
 }
 
 const createTodoElement = todo => {
