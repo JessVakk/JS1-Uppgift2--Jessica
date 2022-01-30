@@ -2,12 +2,10 @@ const form = document.querySelector('#todoForm');
 const input = document.querySelector('#todoInput');
 const output = document.querySelector('#output');
 
-
 let todos = [];
 
-
 const fetchTodos = async () => {
-  const res = await fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
+  const res = await fetch('https://jsonplaceholder.typicode.com/todos/?_limit=10')
   const data = await res.json()
   todos = data;
 
@@ -23,6 +21,7 @@ const listTodos = () => {
     output.appendChild(createTodoElement(todo))
   })
 }
+
 function updateItemStatus() {
   let cbId = this.id.replace("cb_", "");
   let itemText = document.getElementById("item_" + cbId);
@@ -68,27 +67,24 @@ function checkComplete(e) {
     todo.classList.toggle('completed');
   }
 }  
+
 function removeTodo(id, todo) {
   todos = todos.filter(todo => todo.id !== id)
-   const res = fetch('https://jsonplaceholder.typicode.com/todos/'+id, {
-      method: "delete"
-    }).then(res => {
-  
-    if(res.status !== 200 && ('#checked-btn') !== checkComplete) {
-      const message = 'Error with Status Code: ' + res.status;
-      throw new Error(message);
-    }
-     
-  else{
-    const data = res.json();
-    console.log(data);
-    console.log("success");
-    listTodos()
-   
-  }
-})
-
-  
+   const res = fetch('https://jsonplaceholder.typicode.com/todos/'+ id,{
+     method: "delete"
+   }).then(res => {
+     if(res.status !== 200){
+       const message = 'Error with status code' + res.status;
+       throw new Error(message);
+     }
+     else{
+       const data = res.json;
+       console.log(data);
+       console.log('delete succeed');
+       listTodos()
+     }
+   })
+}
 const validateText = (input) =>{
   if(input.value.trim() === ''){
     console.log(input.parentElement)
@@ -96,7 +92,8 @@ const validateText = (input) =>{
     input.parentElement.value = '';
   }
   else if(input.value.trim().length <2){
-    
+    input.parentElement.classList.add('is-invalid')
+    input.parentElement.value = '';
   }
   else{
     input.parentElement.classList.remove('is-invalid')
@@ -110,7 +107,7 @@ const validateText = (input) =>{
     validateText(todoInput);
     
   })
-}
+
 
 const createNewTodo = title => {
     fetch('https://jsonplaceholder.typicode.com/todos', {
@@ -125,12 +122,8 @@ const createNewTodo = title => {
   })
   .then(res => res.json())
   .then(data => {
-//     const id = new URLSearchParams(window.location.search).get('id');
-// console.log(id)
-    console.log(data)
     todos.unshift(data);
-    // listTodos()
-    output.prepend(createTodoElement(data))
+    listTodos()
   })
 }
 
@@ -142,6 +135,5 @@ form.addEventListener('submit', e => {
     createNewTodo(input.value);
     input.value = '';
     input.focus()
-
   }
 })

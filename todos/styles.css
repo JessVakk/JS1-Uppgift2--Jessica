@@ -69,7 +69,10 @@ body {
   margin-left: 1rem;
 }
 .input-group ~ .invalid-feedback{
-  padding-left: .1rem;
+  padding: .5em .6em;
+  border-radius: 10px 10px 10px 10px;
+  border: solid 1px transparent;
+  background-color: #d15d39;
   color:#fff;
   display: none;
 }
@@ -80,8 +83,7 @@ body {
 .is-invalid .form-control,
 .is-invalid .btn{
   outline: .8px solid #fa492a;
-  background-color: #fa492a9c;
-}
+ }
 .is-invalid ~ .invalid-feedback{
   display: block;
   margin-bottom: 1rem;
